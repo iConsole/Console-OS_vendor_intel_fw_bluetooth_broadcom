@@ -1,0 +1,264 @@
+#######################################################################
+#
+# THIS INFORMATION IS PROPRIETARY TO BROADCOM CORPORATION
+#
+# Program name: Intel - Cherrytrail
+# Clock source: 37.4MHz
+# Radio power class: 1.5
+# Master CSP#: 732793
+#
+####################   INFO_END   #####################################
+
+ENTRY "Local Name"
+{
+    "Name" = "BCM4354 37.4MHz Class 1.5 Intel Cherrytrail"
+}
+
+ENTRY "Init BB Register Bit Fields"
+{
+    "Num entries" = 4
+
+    "Register address[0]" = 0x006400fc
+      "Bit field mask[0]" = 0xFFFFFFFF
+               "Value[0]" = 0x80
+
+    "Register address[1]" = 0x00640104
+      "Bit field mask[1]" = 0xFFFFFFFF
+               "Value[1]" = 0x20
+
+    "Register address[2]" = 0x00640108
+      "Bit field mask[2]" = 0xFFFFFFFF
+               "Value[2]" = 0x30
+    #Default to select PCM1   # addr(ptuaux_scoInterface) = 0x00201b62
+    "Register address[3]" = 0x00201b60
+      "Bit field mask[3]" = 0x00FF0000
+               "Value[3]" = 0x00000000
+
+}
+
+ENTRY "SCO Parameters"
+{
+    "I2S enable"  = "False"
+    "Sample rate" = "8 KBps"
+    "SCO routing" = "PCM"
+    "Clock mode" = "Slave"
+    "SCO time slot" = 0
+    "Justify" = "Left"
+    "Fill bits" = 0
+    "Fill data" = "0's"
+    "PCM interface rate" = "512 KBps"
+    "Frame type" = "Short"
+    "Sync mode" = "Slave"
+    "Bit order" = "MSB first"
+}
+ENTRY "ECI Configuration"
+{
+     "Config" = 0xA2000001
+}
+
+====================
+  Release Notes
+====================
+12/11/2013
+1. This customer specific release is based on the following baseline
+
+    BCM4354_003.001.012.0102.0000\Generic\UART\37_4MHz\wlcsp_54_Semco_B80
+##############################################
+#  Major changes in baseline .0102:
+##############################################
+BLTH02758763 [4350C0] RFFW : move the clb regsiters settings for 43568 to bt_clb_regs_43568
+BLTH02758748 - Moving GPIO5 VSYNC- in settings from agi file to resolve mobile platfrom build issue
+BLTH02758735 [4350C0] RFFW : TCATABLE FOR WLBGA ELNA (wlbga_54L_eLNA)" into 4350C0
+BLTH02758747 Move code under CQ#2698114 and CQ#2756977 outside the FACTORY_TXPOWER_CAL / FACTORY_CAL_OS_ONLY flag
+BLTH02758735 [4350C0] RFFW : TCATABLE FOR WLBGA ELNA (wlbga_54L_eLNA)
+BLTH02758737 Fixing CQ# 2696422 Build Issue
+BLTH02758663 [43500] FactoryCal : Syntax error in tca_rssi" into 4350C0
+BLTH02758705 [4350C0] 4350C0 REMOVE 54_BU CGS BRANCH
+BLTH02758696 re-enable secure connection feature because our 4354 hardware has fixed bug
+BLTH02758663 [43500] FactoryCal : Syntax error in tca_rssi
+
+##############################################
+#  Major changes in baseline .0097:
+##############################################
+BLTH02745110  4350C0: Sniff Subrate of 2 Seconds causes link drop.
+BLTH02757016 Update BLTH02756977 patch
+BLTH02757003 Fix flash build failures
+BLTH02572218 [BLE] Clean up the code for deferred Rx processing to prevent memory issue
+BLTH02756993 fix compliling error for ROM equivalent build" into 4350C0
+BLTH02756977 LE Zone Monitor spec v6 updates including parsing and timer callback changes
+BLTH02756993 fix compliling error for ROM equivalent build
+BLTH02741563 Factory cal update doesn't not update on LE scan" into 4350C0
+BLTH02748904 add the ability to selectively choose PCA feature" into 4350C0
+BLTH02741563 Factory cal update doesn't not update on LE scan
+BLTH02756983 - Modify Makefile to include make4350_patch_equiv.inc
+BLTH02748904 add the ability to selectively choose PCA feature
+BLTH02750486 [4350C0] BCM4354A1 TCA table changes for wlbga_54_CUST_iLNA
+BLTH02748893 [4350C0] Create new branch for wlcsp_54_Semco_B80
+BLTH02748906 BDR/EDR RSSI monitoring feature added
+BLTH02748807 4350C0 - porting LE LLT rev1.0.18" into 4350C0
+BLTH02746989 Update ANT+ library to 1.03B15
+
+##############################################
+#  Major changes in baseline .0096:
+##############################################
+BLTH02748862 [4350C0] RFFW : init bb register put to wrong location, cannot download
+BLTH02748843 Temporarily disable BT4.1 PCA changes
+BLTH02743301 page/inq tx suppression VSC
+BLTH02747018 - Adding new RF setting for 43568  iLNA" into 4350C0
+BLTH02708069 port latest PCA changes
+BLTH02747018 - Adding new RF setting for 43568  iLNA
+BLTH02743255 4354 ASIC BLE - Role switch failed on MRD with 8 LE and ACL master
+BLTH02745196 System will crash if disconnect UART when LE is scanning
+BLTH02746949 change PCM interface default setting for generic target branch
+BLTH02746949 change PCM interface default setting to be PCM1 instead of PCM2
+BLTH02746872 4350c0: Undo CQ BLTH02656978 for 4350C0 USI target to transit to C1 such it restore to the default as MUR branches.
+BLTH02743296 Use coex entry in CGS to enable LTE CoEx GPIO mode
+    // 0 -> BT_SIG mode (default mode)
+    // 1 -> GPIO mode
+    // 2 -> SECI mode
+    // 3 -> undefined
+BLTH02745134 LE connection timeout issue with GB-6900 casio watch due to incorrect active RSSI scan result
+BLTH02745128 Port HW CQ BLTH02293110 to cover LE Casio watch connection timeout issue on certain customer platform.
+BLTH02743171 Delayed Role Switch failure event
+BLTH02743331 Modify LE ADV report to include ADV Freq and Antenna state
+BLTH02745104 Keep BT PA LDO on except in sleep mode to resolve ramp up time issue
+BLTH02743291 A2DP chopping while connected with mouse
+BLTH02743169 Fix the I2S audio output mute issue when audio transfers between two headsets under dual HF scenario
+BLTH02743191 Add configuration of LE Completed Packet threshold and maxTxRx pairs to Olympic Settings VSC
+BLTH02743179 [BLE] BLE cannot set up connection during BT inquiry
+BLTH02743246 ACL tx data big delay issue while connected with more than 4 slave devices
+BLTH02743178 A2DP streaming(APT-X) sluggish when doing BT inquiry.
+BLTH02743215 Device is unconnectable after link drop during encryption pause/resume due to role switch
+BLTH02741567 Fix an OPP sending failure issue with BCM2070 PC
+BLTH02743197 Disable secure connection feature since HW doesn't support it well
+BLTH02741591 Disable BLTH02683249 patch and legacy Power Consumption feature
+BLTH02708208 [BLE] Prevent premature memory freeing at scan disable
+BLTH02710088 [BLE] Support 0.1dB RSSI for ADV reports
+
+##############################################
+#  Major changes in baseline .0085:
+##############################################
+BLTH02725565 [4350C0] FactoryCal:BLE RSSI - handle AGC boost gain + relax adcRssiZsync and rssiOutRd_sp checkings by 1dB
+BLTH02723767 [4350C0] RFFW : 4350C0 WLBGA ILNA TCATABLE - IFIDAC=0x22 (11/25)
+
+##############################################
+#  Major changes in baseline .0084:
+##############################################
+BLTH02723874 Adding btp file for LG demo builds in 4350C0
+BLTH02723742 Connection Less Broadcast Fixes for 4350C0 and adding folder for LG demo releases
+BLTH02723738 [4350C0] RFFW :4350C0 FCBGA ILNA INITIAL TCATABLE(11/25)
+BLTH02720494 Port the change in lm_handleClockRollover() from BLTH02660233 to 4350C0
+BLTH02711965 4350C0 - enable le scatternet by default for Olympic builds
+BLTH02692926 Profiling Stats -- 0% on sleep mode during BT sniff ACL throughput in sleep mode
+
+##############################################
+#  Major changes in baseline .0082:
+##############################################
+BLTH02713840 fix ANT+ feature enable bug
+
+##############################################
+#  Major changes in baseline .0081:
+##############################################
+BLTH02713788 Create a new target branch wlbga_54_BU and Enable ANT+ feature in wlbga_54_BU and wlbga_54L_eLNA
+BLTH02712018 Profiling Stats -- % is greater than 100% after reset
+BLTH02713719 [4350C0] disable legacyDigGain for BLE to fix LE RSSI compensation issue" into 4350C0
+BLTH02713733 [4350C0] RFFW : WLBGA iLNA TCA table-IFIDAC=0x22
+BLTH02713719 [4350C0] disable legacyDigGain for BLE to fix LE RSSI compensation issue
+BLTH02711976 : [4350C0]  4354 Branch CGS Request
+BLTH02698114 Link quality assessment and modulation index change feature
+
+##############################################
+#  Major changes in baseline .0078:
+##############################################
+BLTH02708246 Port the CQ#2657113 which fix the failure of perfroming DFU downloiad on UHE mode.
+BLTH02708238 change to apply the non PDS setting for internal LPO to support the BCM943569USB board
+BLTH02668240 - pin swap of  BT_DEV_WAKE and BT_HOST_WAKE
+BLTH02510529 [BLE] FW workaround for a HW bug: HW uses TxBuf0 pktLen when transmitting TxBuf1" into 4350C0
+BLTH02694690 [4350C0] FactoryCal : merge the issues found in 4345A0/B0
+BLTH02694626 [BLE] Change the LE LL update instant to be different from the LL message current event offset
+BLTH02510529 [BLE] FW workaround for a HW bug: HW uses TxBuf0 pktLen when transmitting TxBuf1
+
+##############################################
+#  Major changes in baseline .0065:
+##############################################
+BLTH02692871 [4350C0]RFFW:4350C# TCATABLE UPDATE - FCBGA ELNA BRANCH
+BLTH02692804 [4335C0]RFFW:4350C# TCATABLE UPDATE - WLBGA ELNA BRANCH
+BLTH02681517 [4350C0] update BLE TCA Current Page PAD after TSSI CAL. [4350C0] update BLE TCA Current Page PAD after TSSI CAL.
+BLTH02683172 4350C0: Make SCO over I2S port compatible with Olympic integration and accommodate manufacture test process on I2S port
+BLTH02681511 [4350C0]RFFW:4350Cx TCA ENABLE CONTROL
+BLTH02677850 4350C0: Add default configurability on PCM2 module and apply legacy VSC commands to PCM2
+
+##############################################
+#  Major changes in baseline .0051:
+##############################################
+BLTH02677758 [4350C0] Add internal LPO to support the BCM943569USB board
+BLTH02293020 Fix a script issue:  return correct address for global variables in AUTOGEN
+BLTH02528216 [4350C0] - USB - usb11 HW handles ZLP generation so send ZLP only when usb3 is used
+BLTH02660224 4350C0: Increase Sniff Task Priority to be greater than A2DP and LE
+BLTH02639886 Fix sleep mode current issue caused by entry to pmu pause during LPO Calibration
+BLTH02660288 LTE CoEx: Port missing eSCO algorithm changes" into 4350C0
+BLTH02668313 [4350C0] RFFW : WLBGA ILNA TCATABLE - IFIDAC=0x22
+BLTH02660288 LTE CoEx: Port missing eSCO algorithm changes
+BLTH02663313 LTE CoEx: move code to reset type-6 bitmap to correct file" into 4350C0
+BLTH02663363 Master connection is lost if ExternalLPO is not connected.
+BLTH02663313 LTE CoEx: move code to reset type-6 bitmap to correct file
+BLTH02656978 4350C0: 4350C0_RF_tunning_Riesling_and_Zinfandel_branch(USI target)" into 4350C0
+BLTH02660204 Add failsafe DFU to build list" into 4350C0
+BLTH02653864 CoEx support for LE-Audio (input and output)
+BLTH02656978 4350C0: 4350C0_RF_tunning_Riesling_and_Zinfandel_branch(USI target)
+BLTH02660204 Add failsafe DFU to build list
+
+##############################################
+#  Major changes in baseline .0048:
+##############################################
+BLTH02660212 : Update ANT+ library 1.03B14
+
+##############################################
+#  Major changes in baseline .0041:
+##############################################
+BLTH02629820 : add tx power switch between LE and ANT+
+BLTH02629818 : add ANT+ event reporting to host
+BLTH02631554 : Increase the MinDriftErrorPPM.
+BLTH02631560 : Fix the LE connection drop issue with +/- 16 us drift
+BLTH02629818 : Fix A2DP streaming choppiness issue
+BLTH02629800 : add ANT+ fix from BCM4339 and create a new target branch to enable ANT+
+BLTH02598231 : Implement HCI VSC LTE Enable WCI2 Loopback Testing using GCI
+
+##############################################
+#  Major changes in baseline .0039:
+##############################################
+BLTH02618518 [4350C0] Enable PCM when no serial_flash
+BLTH02618480 [4350C0] RFFW : TCATABLE - WLBGA ELNA ONLY (SINGLE CAPTUNE, IFIDAC=0x22)
+BLTH02613324: Add FM 40MHz Ref Update - HW CQ BLTH02094153 FM 52MHz Ref Update
+BLTH02615019 [4350C0] FCBGA iLNA FEM Settings
+BLTH02598225:Update GCI interrupt Handler
+BLTH02526227 4350C0_BLE_SM: LE connection failed to be fully established with 0x3E
+BLTH02613324: Add FM 40MHz Ref Update - HW CQ BLTH02094153 FM 52MHz Ref Update.
+
+##############################################
+#  Major changes in baseline .0033:
+##############################################
+BLTH02603808 [4350C0] FactoryCal : wrong break out address for lm_GetFilteredRSSI patch
+
+##############################################
+#  Major changes in baseline .0031:
+##############################################
+BLTH02600121: Coex: COEX FW to do a soft reset on LCU when esco 2nd retransmission window is denied by wlan
+BLTH02603776 [4350C0]  FactoryCal : 0.1 dB accuracy the fractional part larger then 0.9
+
+##############################################
+#  Major changes in baseline .0026:
+##############################################
+BLTH02572165: LTE CoEx eSCO: for EV3, high priority bit is not set correctly before Rf_Active asserts
+BLTH02600077 [4350C0] Factorycal : Read_Raw_RSSI still have some fix offset after calibration
+BLTH02598148 [4350C0] RFFW : RF REG UPDATE
+BLTH02598145 [4350C0] RFFW : LE Rx Settings Update
+BLTH02588990 [4350C0] FactoryCal : eLNA bypass and temperture slope
+BLTH02572168: Implement VSC for LTE Trigger WCI2 message over GCI
+
+##############################################
+#  Major changes in baseline .0024:
+##############################################
+BLTH02575860 [4350C0] RFFW : LE Test mode tx/rx set dx_rtx_start_cnt to 0xbe
+BLTH02574123 [4350C0]RFFW:4350C0 3M XTAL HARMONIC DESENSE AFTER LE_TX
+BLTH02573886 [4350C0] RFFW:4350C0 3M XTAL harmonic densense after LE_TX

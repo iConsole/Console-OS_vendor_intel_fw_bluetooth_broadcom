@@ -1,0 +1,496 @@
+#######################################################################
+#  
+# THIS INFORMATION IS PROPRIETARY TO BROADCOM CORPORATION
+#
+# Program name: Intel Moorefield
+# Clock source: 37.4MHz
+# Radio power class: 1.5
+# Master CSP#: 816556
+#
+# Customization
+# =============
+#
+# - UART_TX pull up
+# - PCM and I2S pins no pull
+# - BT 4.1
+# - WCI2 IN: GPIO4
+#
+####################   INFO_END   #####################################
+
+ENTRY "Local Name"
+{
+    "Name" = "BCM4356 37.4MHz Class 1.5 Intel Moorefield W2G4-0053"
+}
+
+ENTRY "Init BB Register Bit Fields"
+{
+    "Num entries" = 8
+
+    "Register address[0]" = 0x006400fc
+      "Bit field mask[0]" = 0xFFFFFFFF
+               "Value[0]" = 0x80
+
+    "Register address[1]" = 0x00640104
+      "Bit field mask[1]" = 0xFFFFFFFF
+               "Value[1]" = 0x20
+
+    "Register address[2]" = 0x00640108
+      "Bit field mask[2]" = 0xFFFFFFFF
+               "Value[2]" = 0x30
+
+    # cr_pad_config_adr5 [7:0]   : UART_CTS_N :  Input, no pull
+    # cr_pad_config_adr5 [15:8]  : UART_RTS_N :  Output, no pull
+    # cr_pad_config_adr5 [23:16] : UART_RXD   :  Input, no pull
+    # cr_pad_config_adr5 [31:24] : UART_TXD   :  Output, pull up
+    "Register address[3]" = 0x0032007c
+      "Bit field mask[3]" = 0xFFFFFFFF
+               "Value[3]" = 0xBAB9B8B9
+
+    # cr_pad_config_adr4 [ 6:0 ] : PCM_IN   : Input,  no pull, drive strength 8 mA
+    # cr_pad_config_adr4 [14:8 ] : PCM_OUT  : Output, no pull, drive strength 8 mA
+    # cr_pad_config_adr4 [22:16] : PCM_CLK  : Input, no pull, drive strength 8 mA
+    # cr_pad_config_adr4 [30:24] : PCM_SYNC : Input, no pull, drive strength 8 mA
+    "Register address[4]" = 0x00320078
+      "Bit field mask[4]" = 0xFFFFFFFF
+               "Value[4]" = 0xB9B9B8B9
+
+    # cr_pad_config_adr7 [7:0]   : I2S_DO : Output, no Pull 
+    # cr_pad_config_adr7 [23:16] : I2S_DI : Input, no Pull 
+    "Register address[5]" =  0x003200e4
+      "Bit field mask[5]" =  0xFFFFFFFF
+               "Value[5]" =  0x09393D38
+
+    # cr_pad_config_adr8 [23:16] : I2S_WS  : Input, no Pull 	
+    # cr_pad_config_adr8 [31:24] : I2S_CLK : Input, no Pull 	
+    "Register address[6]" =  0x00320110
+      "Bit field mask[6]" =  0xFFFF0000
+               "Value[6]" =  0xB9B90000
+			   
+ 	#FW CQ BLTH03051334 && BLTH03078737
+ 	#Default to select PCM1   # addr(ptuaux_scoInterface) = 0x00201b5A
+	#Turn on "PCM_FW_CONTROL_DO_NOT_FORCE_PULL_DOWNS", i.e., set uint8 at 0x0201b59 to 0x01
+      "Register address[7]" =  0x00201b58
+        "Bit field mask[7]" =  0x00FFFF00
+                 "Value[7]" =  0x00000100					   
+}
+
+ENTRY "Bluetooth 2.0+ Features"
+{
+     "Enable" = 0x37
+
+#define RM_20_SPEC_MASK             0x01
+#define RM_30_SPEC_MASK             0x02 //Reclaim bit from RM_ABSENCE_MASK
+#define RM_21_SPEC_MASK             0x04
+#define RM_EPC_MASK                 0x08 //Not supported by ROM code
+#define RM_40_SPEC_MASK             0x10 //Set to 0x17
+#define RM_41_SPEC_MASK             0x20 //Set to 0x37
+}
+	
+ENTRY "Data"="bcspage_bcsPageInqLteCoexPureTdm"
+{
+        "Address"= 0x00201298 # <<< $AUTOGEN(ADDR{bcsPageInqLteCoexPureTdm})
+        "Data"=
+            COMMENTED_BYTES
+            {
+                   <hex>
+                   00
+            } END_COMMENTED_BYTES
+}
+
+====================
+  Release Notes
+====================
+
+02/27/2015
+
+1. This customer specific release is based on the following baseline
+
+    BCM4356A2_001.003.015.0053.0000_Generic_UART_37_4MHz_wlcsp_Semco_B81_eLNA
+
+
+##############################################
+#  Major changes in baseline .0001:
+##############################################
+BLTH03003883 	Setup the SCM build
+BLTH02976279 	Patch dbguart
+BLTH02935097 	Remove A_4350C0 in BLD_ROM folder
+BLTH02923113 	Tape out checkin of BLD_ROM folder for BCM4354A2 based on BCM4354A2_001.003.015
+
+##############################################
+#  Major changes in baseline .0002:
+##############################################
+BLTH03007666 	Create the build folders
+
+##############################################
+#  Major changes in baseline .0003:
+##############################################
+BLTH03011567 	Change DLConfigSSLocation value in all btp files
+BLTH03011581 	add 40Mhz patch
+BLTH03011612 	FEM register setting
+BLTH03011613 	Update agc table
+
+##############################################
+#  Major changes in baseline .0004:
+##############################################
+BLTH02942545 	BT slot interrupt HW WAR
+BLTH02909196 	[BLE] LE connection drop in LE scatternet mode
+BLTH02893222 	Device is not discoverable due to inquiry scan not getting scheduled
+BLTH03024211 	FEM register setting (modification)
+
+##############################################
+#  Major changes in baseline .0005:
+##############################################
+BLTH03033157 	Modify the FAD_ID used in the TCA table for FCBGA
+
+##############################################
+#  Major changes in baseline .0006:
+##############################################
+BLTH02924969 	Set the A2DP_FLOW_ON state after 25ms for A2DP source after HS flows off
+BLTH03042548 	Enable CoEx - Enable BT-WLAN CoEx - Disable BT-LTE CoEx
+
+##############################################
+#  Major changes in baseline .0007:
+##############################################
+BLTH02992800 	Fix ble low duty cycle adv type code
+BLTH03044069 	MLSE DEFAULT 0x31FA64=0x836
+BLTH02893147 	Set maxSlotToServePcm differently for NBS and WBS
+
+##############################################
+#  Major changes in baseline .0008:
+##############################################
+BLTH03044695 	Disable BT4.1 features
+
+##############################################
+#  Major changes in baseline .0009:
+##############################################
+BLTH03044777 	Add a new target branch and integrate new RF settings
+
+##############################################
+#  Major changes in baseline .0010:
+##############################################
+BLTH03045296	[BLE] VERSION_IND shows BT4.0 even though it has BT4.1 support
+BLTH03045220	BLE: LEA: 4356 LE audio right channel not sceduled at primary event with HID 12.5ms
+BLTH03045242 	Issue soft reset of audio DAC upon boot up to eliminate possible source of leakage
+BLTH03045195 	Turn off both LDO3P3 when going into PDS mode
+BLTH03045126 	Add slave side changes for CSB compliance
+BLTH03045042 	Eliminate additional LE_Scan activity right after page is started
+BLTH02994992	LTE Coex: Train nudging changes
+BLTH03044958 	BLE: Clone scan/init combo Fix
+BLTH03044948 	eSCO - Connection sometimes cannot be established with Looxcie headset
+BLTH03044544 	[4356] Low MOS scores on BLE dual mode SCO/WBS tabs
+
+##############################################
+#  Major changes in baseline .0012:
+##############################################
+BLTH03045094 	CoEx multi-HID: One sniff connection starves (ARQN bump every x ms fix)
+BLTH03045313 	Add BDR/EDR RSSI monitoring feature, which has included 4 CQ from 4350C0: BLTH2748906, BLTH2762387, BLTH2772345, BLTH2772397
+BLTH03045333 	FLL Needs FW Reset During Power up sequence
+BLTH03045345 	BLE Audio: Master saw MIC error when slave has received LE_Audio_Select from host
+BLTH03045515 	Fix no sound issue with Moto H700
+BLTH03045526 	Fix the SCO RX pop coin noise due to ApipeFill
+BLTH03045605 	4.1_BLE_SM: Unkonwn ACL packets received while a master IUT with encryption and connection update procedure
+BLTH03045641 	Updates to CSB and CSB tester framework
+BLTH03045643 	Coexistance case need to add offset on RSSI reading when WLAN desense BT
+BLTH03047482 	Fix LE Casio watch connection timeout issue
+BLTH03051334 	Change PCM interface default setting to PCM1
+
+##############################################
+#  Major changes in baseline .0013:
+##############################################
+BLTH03064124 	AFH changes for ETSI testing
+BLTH03066050    ADD NEW CGS BRANCH 
+BLTH03067972    Move BT4.1 disable to wlcsp_Semco_B81_eLNA branch
+
+##############################################
+#  Major changes in baseline .0014:
+##############################################
+BLTH03069854    ADD NEW CGS BRANCH 
+BLTH03069907    Additional changes for CSB 4.1 qualification
+BLTH03045651    porting LE LLT rev1.0.18
+
+##############################################
+#  Major changes in baseline .0015:
+##############################################
+BLTH03084866    Fix LE LLT issues
+
+##############################################
+#  Major changes in baseline .0016:
+##############################################
+BLTH03080671    LE ADV BRCM Packet Content Filter implementation
+BLTH03087165    PCA: avoid doing PCA transaction check within interrupt context 
+BLTH03087063    update LLT internal rev to 1.0.22 for tracking purpose 
+
+##############################################
+#  Major changes in baseline .0017:
+##############################################
+BLTH03071724    LE connection terminated due to MIC failure, then FW crashed
+BLTH03078737    Synchronize the pcm2Config and pcm_vscParm variables
+BLTH03099965    Disable BLTH03045526 Fix the SCO RX pop coin noise due to ApipeFill
+
+##############################################
+#  Major changes in baseline .0018:
+##############################################
+BLTH03107249    Fix interlace scan problem
+BLTH03096390    Multi Advertising Support for Google
+BLTH03107279    secure more memory resource for patch
+
+##############################################
+#  Major changes in baseline .0019:
+##############################################
+
+BLTH03107269 	Fix parenthesis around lc_info.mwsFrameDuration
+ 
+##############################################
+#  Major changes in baseline .0020:
+##############################################
+
+BLTH03045105 	Oxygen CoEx: Update GCI to let WLAN know when BT clock synced with WLAN strobe
+BLTH03045097 	Oxygen CoEx: eSCO reserved frames on multiple different BT links should align with each other
+BLTH03125412 	Fixes for USB RAM download no re-enumeration
+BLTH03125339 	fix high sleep current issue due to A4WP mode
+BLTH03125273 	Fix TP/PROT/ED/BV-01-C
+BLTH03045194 	Port USB fixes from 4350C0 to 4354A2
+
+##############################################
+#  Major changes in baseline .0021:
+##############################################
+
+BLTH03144359 	modify scatter file to avoid linker padding error
+BLTH03142429 	fix high sleep current issue
+BLTH03144301 	TCA table is not added correctly
+BLTH03142423 	Create a new target branch
+BLTH03107227 	Google LE Features: Batching FW implementation (except LE Scan / Batch Scan concurrency)
+BLTH03127286 	Google onFound/onLost feature implementation (porting from 4350C0)
+BLTH03140391 	Enable BT4.1 feature on wlcsp_Semco_B81_eLNA branch
+BLTH03129281 	BLE: Add new vendor specific commands for RPA offload
+
+##############################################
+#  Major changes in baseline .0022:
+##############################################
+
+BLTH03157574 	Add missing ANT flag check
+BLTH03140418 	4354A2 Multi ADV: RSSI value does not change with set TX power
+BLTH03129155	HAL Simulation patch added to 4354A2
+BLTH03144407 	MultiAdv:Unable to create instance after creating BT connection in sniff/SCO
+
+##############################################
+#  Major changes in baseline .0023:
+##############################################
+
+BLTH03180942 	Fix sleep and sniff issue with GPIO2 floating
+BLTH03174712 	Add firmware WA for handling I2C NACK to detect WPT on/off with BT ON
+BLTH03064160 	Do not send WCI-2 Type-1 Resend_Real_Time message on BT wake if LTE CoEx is not enabled
+BLTH03174790 	BCM4354A2: cannot connect ANT+
+
+##############################################
+#  Major changes in baseline .0024:
+##############################################
+
+BLTH03176848 	(4354A2 ROM patch git/fw) Fix LED open drain is not working for 4335C0 in FW configuration (Only works for AGPIO 5) 
+BLTH03146503 	BT Regression [4354A2] -- (Reading All Link Keys) -- Max_Num_Keys is 8 rather than 1 in Read_Stored_Link_Key Command Complete 
+BLTH03181026 	4354 BRCM PCF: Adv events not rcvd with multiple Local name filters (+ Fixes from Google Integration Camp)
+BLTH03208145 	Add config entry for MaxNumKeys, remove patch
+
+##############################################
+#  Major changes in baseline .0025:
+##############################################
+
+BLTH03225721 	Switch back to Max_Num_Keys patch, the CONFIG ENTRY causes HCI reset to fail. 
+BLTH03221371 	Google LE Features: PCF: add support for NA (0x02) address type in address filter
+
+##############################################
+#  Major changes in baseline .0026:
+##############################################
+
+BLTH03238954 	LE ADV BRCM APCF changes to avoid potential problem when APCF_List_Logic_type is AND for UUID 
+BLTH03193514 	[4354] Google Batch Scan Concurrency
+BLTH03221507 	Google LE features:  support for spec 5.2 (Energy Info VSC support, Multi ADV Tx Power in dBm units) 
+BLTH03227764 	Fix BT transmitting issue during LDO3P3 ramp up
+BLTH03236840    Correct table entry in BLTH03208145 that causes HCI reset issues
+BLTH03238930    Google LE Features:  Batching notification threshold change
+BLTH03238973    Google LE Features: Energy Info support
+BLTH03245642    Make External .vs Internal LPO selection configurable
+BLTH03241352    Add 37.4MHz csb_SIG_test branch
+
+##############################################
+#  Major changes in baseline .0027:
+##############################################
+
+BLTH03277036 	Batch scan failed
+BLTH03255296 	Enhanced Synchoronous Connection usage instead of using VSCs 
+BLTH03276849 	enhancement for SCO for MOS score
+
+##############################################
+#  Major changes in baseline .0028:
+##############################################
+
+BLTH03280699     BRCM PCF:Adv events not rcvd with multiple Local name,service sol,Mfgdata filters 
+BLTH03284280     LE Batching: Fix white list issue
+BLTH03297849     BLE: support  -60dBm Adv Tx power
+BLTH03262038     LLT 1.0.26 bypass scan links when validating the proposed link parameters and fix a coding bug 
+BLTH03280669     insert Silence for needed amount instead of packet size
+
+##############################################
+#  Major changes in baseline .0029:
+##############################################
+
+BLTH03266046     BRCM PCF: Adv events not rcvd when service sol uuid is 32 bit
+BLTH03301495     LLT 1.0.27 test link's interval is not reinitialized for each test method
+
+##############################################
+#  Major changes in baseline .0030:
+##############################################
+
+BLTH03290077     Google Energy Info support:  change idle_time reported to not include sleep
+BLTH03318775     Multi-Adv TX power change is not done properly
+
+##############################################
+#  Major changes in baseline .0031:
+##############################################
+
+BLTH03338333 BLE Radar IRK resolution could cause memory leak
+BLTH03263873 Multi Adv: LE connection timeout with one of the multi ADV instance
+BLTH03338332 Memory corruption when LE scan is running and mem pools are very low on  
+memory 
+BLTH03338525 Multi-Adv does not work with TX power change
+BLTH03340518 Batch Scan: change truncated mode to active scan
+
+##############################################
+#  Major changes in baseline .0032:
+##############################################
+
+BLTH03352219 Fix the problem in the while() loop in the function hci_HandleUpdateUartBaudRate()
+
+##############################################
+#  Major changes in baseline .0033:
+##############################################
+
+BLTH03263864 Multi Adv: RX level does not change as per Tx power
+
+##############################################
+#  Major changes in baseline .0034:
+##############################################
+
+BLTH03354435 Use a hard-coded modifier for the update instant calculation.
+BLTH03356402 Make SCA configurable.
+
+##############################################
+#  Major changes in baseline .0035:
+##############################################
+
+BLTH03356452 Adjust instant for connection update and afh channel update.
+
+##############################################
+#  Major changes in baseline .0036:
+##############################################
+
+BLTH03358516 Multi Adv: Connection drop due to connection timeout seen while testing Multi Adv
+
+##############################################
+#  Major changes in baseline .0037:
+##############################################
+BLTH03401313: 4354A2 Patch to Allow Reading the BD ADDR from OTP
+
+##############################################
+#  Major changes in baseline .0038:
+##############################################
+BLTH03415920: LE Connection Request is not send out for combo mode
+
+##############################################
+#  Major changes in baseline .0039:
+##############################################
+
+BLTH03429063 4356A2:RPA:Adv events not detected as IUT is in bad state   
+BLTH03436024 AFH changes for ETSI testing with dynamic AFH interval changes
+BLTH03437662 disable PCA for PC targets
+BLTH03434814 [4354A2] ETSI RSSI SCAN
+
+##############################################
+#  Major changes in baseline .0040:
+##############################################
+
+BLTH03437988 Bad activateStart value in pageScanTaskStorage after failed page ID exchange
+
+
+##############################################
+#  Major changes in baseline .0041:
+##############################################
+
+BLTH03438272 enable PCA per customer requirement
+
+
+##############################################
+#  Major changes in baseline .0042:
+##############################################
+
+BLTH03438732 [4354A2] ETSI RSSI SCAN - Removed it causes SVT I2S failures.
+
+##############################################
+#  Major changes in baseline .0043:
+##############################################
+
+BLTH03439583 Enable L feature on Semco Module
+
+##############################################
+#  Major changes in baseline .0044:
+##############################################
+BLTH03441803: Fixed an issue that Disabling A4WP was not done Properly
+BLTH03439842: AFH: restore RF/Modem register in the last slot interrupt of FW RSSI scan task
+BLTH03442248: Stop EnhancedSetupSynchronousConnection's overwriting of PCMInterfaceRate
+
+##############################################
+#  Major changes in baseline .0045:
+##############################################
+BLTH03412207: Fixed excessive adv report events when pcf is enabled
+BLTH03441134: Fixed Dual Mode - BT inquiry does not report any responses from peer devices.
+BLTH03442935: Enhancement on PCF: Concatenate the content of ADV and ScanRsp packets when filtering using PCF
+BLTH03442582: Fixed MultiADV Tx power setting affects LE connection Tx power
+BLTH03442932: Fixed PCF:More than 1 adv event rcvd for Service data change
+
+##############################################
+#  Major changes in baseline .0046:
+##############################################
+BLTH03445990: Resolve Create Connection Cancel event when doing LE scans and creating LE connection
+BLTH03446020: Fixed A2DP noise issue while Gear is out of range and phone is trying to reconnect to it
+BLTH03445984: Fixed an issue that Repeated Attempt recovery timer not running
+
+##############################################
+#  Major changes in baseline .0048:
+##############################################
+BLTH03448131: Fix FW crash during COEX-multi connection(LE/ACL/SCO...) test
+
+##############################################
+#  Major changes in baseline .0049:
+##############################################
+BLTH03448357: Detect LTE FDD band from HCI command SetMwsChannelParameters as well as  
+from SetExternalFrameConfiguration 
+BLTH03448459: LTE Coex: assert RX_PRI when using FDD configuration
+BLTH03044613: Make WCI-2 UART pins assignment to WLAN GPIOs CGS configurable
+
+##############################################
+#  Major changes in baseline .0050:
+##############################################
+BLTH03449234 Enable hardware high pass filter for CVSD streams to remove noise
+
+##############################################
+#  Major changes in baseline .0051:
+##############################################
+BLTH03449076 Connection timeout observed during ACL Transfer and LL becomes unresponsive
+
+##############################################
+#  Major changes in baseline .0053:
+##############################################
+BLTH03451574 Fixed crash when SCO link is initiated while LE connection and HCI_LE_Create_Connection are active
+BLTH03451585 Fixed BT Channel handle leak caused by LE connections
+BLTH03452392 Remove INLINE calls from patches
+BLTH03452792 Allow setting input/output bandwidth to 32000 byte/sec in Enhanced_Setup_Synchronous_connection
+
+
+
+
+
+
+
+
+
+
